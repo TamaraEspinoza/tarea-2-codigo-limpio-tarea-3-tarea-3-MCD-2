@@ -152,7 +152,7 @@ class TestDataCleaner(unittest.TestCase):
         intercuartílico (IQR).
         
         Escenario esperado:
-        - Crear un DataFrame con valores extremos usando make_sample_df() (contiene edad=120)
+        - Crear un DataFrame con valores extremos usando make_sample_df() (contiene edad=120)  LO MODIFIQUÉ PARA QUE 120 FUERA OUTLIER
         - Llamar a remove_outliers_iqr con la columna "age" y factor=1.5
         - Verificar que el valor extremo (120) fue eliminado del resultado (usar self.assertNotIn para verificar que 120 no está en los valores de la columna)
         - Verificar que al menos uno de los valores no extremos (25 o 35) permanece en el resultado (usar self.assertIn para verificar que está presente)
@@ -190,7 +190,10 @@ class TestDataCleaner(unittest.TestCase):
         - Llamar a remove_outliers_iqr con una columna de texto (ej: "city")
         - Verificar que se lanza un TypeError (usar self.assertRaises)
         """
-
+        df= make_sample_df()
+        cleaner = DataCleaner()
+        with self.assertRaises(TypeError):
+            cleaner.remove_outliers_iqr(df, "city", factor=1.5)
 
 if __name__ == "__main__":
     unittest.main()
