@@ -157,7 +157,11 @@ class TestDataCleaner(unittest.TestCase):
         - Verificar que el valor extremo (120) fue eliminado del resultado (usar self.assertNotIn para verificar que 120 no está en los valores de la columna)
         - Verificar que al menos uno de los valores no extremos (25 o 35) permanece en el resultado (usar self.assertIn para verificar que está presente)
         """
-        df= make_sample_df()
+        df= pd.DataFrame(
+        {
+            "name": ["A", "B", "C", "D", "E", "F"],
+            "age": [25, 30, 32, 35, 40, 120]  # 120 is a likely outlier
+        })
         cleaner = DataCleaner()
         result = cleaner.remove_outliers_iqr(df, "age", factor=1.5)
         self.assertNotIn(120, result["age"].values)
